@@ -1,0 +1,99 @@
+﻿<UserControl x:Class="TwilTool.Views.InboundTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TwilTool.Views"
+             mc:Ignorable="d" 
+             xmlns:designViewModel="clr-namespace:TwilTool.ViewModels"
+             d:DataContext ="{d:DesignInstance {x:Type designViewModel:InboundTabViewModel}, IsDesignTimeCreatable=True}" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                <RadioButton Margin="5" Content="Today" IsChecked="{Binding FilterToday}"/>
+                <RadioButton Margin="5" Content="Yesterday" IsChecked="{Binding FilterYesterday}"/>
+                <RadioButton Margin="5" Content="Other" IsChecked="{Binding FilterOther}"/>
+                <DatePicker SelectedDate="{Binding FilterDate}" Visibility="{Binding FilterOther, Converter={StaticResource BoolToVis}}"/>
+            </StackPanel>
+            <Button Grid.Row="1" 
+                    HorizontalAlignment="Center" 
+                    Width="200"
+                    Margin="10"
+                    Content="Get Messages" 
+                    Command="{Binding GetMessagesCommand}"/>
+
+            <StackPanel Grid.Row="2" HorizontalAlignment="Center">
+                <Border Style="{StaticResource ValidBox}" Margin="5" Visibility="{Binding WasSuccessful, Converter={StaticResource BoolToVis}}">
+                    <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" Text="{Binding SuccessMessage}" />
+                </Border>
+                <Border Style="{StaticResource ErrorBox}" Margin="5" Visibility="{Binding HasError, Converter={StaticResource BoolToVis}}">
+                    <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" Text="{Binding ErrorMessage}" />
+                </Border>
+            </StackPanel>
+
+            <ListBox Grid.Row="3"  
+                     HorizontalAlignment="Stretch" 
+                     ItemsSource="{Binding Messages}"
+                     Margin="15"
+                     
+                     >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="From" Style="{StaticResource FieldLabel}"/>
+                                <TextBlock  Text="{Binding FromNumber}" Style="{StaticResource FieldValue}" />
+                               
+                                <Label Margin="10,0,0,0" Content="Date" Style="{StaticResource FieldLabel}"/>
+                                <TextBlock  Text="{Binding DateMessageRecieved}" Style="{StaticResource FieldValue}" />
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Message" Style="{StaticResource FieldLabel}"/>
+                                <TextBlock  Text="{Binding MessageBody}" Style="{StaticResource FieldValue}" TextWrapping="Wrap" />
+                            </StackPanel>
+                            <Separator/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <Grid Visibility="{Binding IsBusy, Converter={StaticResource BoolToVis}}">
+            <Grid Background="Gray" Opacity=".5" >
+            </Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <ProgressBar
+                        IsIndeterminate="True" 
+                        Height="25"
+                        Margin="10"
+                        Grid.Row="1"
+                        Opacity="1.0"
+                    />
+                <TextBlock 
+                        Grid.Row="2"
+                        Text="Retrieving messages..." 
+                        Foreground="{StaticResource AccentColorBrush}"
+                        FontSize="20"
+                        Opacity=".9"
+                        FontWeight="Bold"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center" 
+                        HorizontalAlignment="Center" 
+                   />
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,42 @@
+﻿<Application x:Class="TwilTool.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:TwilTool"
+             xmlns:ninjawpf="clr-namespace:NinjaMvvm.Wpf.Converters;assembly=NinjaMvvm.Wpf"
+             xmlns:vm="clr-namespace:TwilTool.ViewModels"
+             xmlns:v="clr-namespace:TwilTool.Views"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary Source="Themes/Standard/StandardTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+            <ninjawpf:NegativeBooleanToVisibilityConverter x:Key="NegativeBoolToVis"/>
+
+            <Style x:Key="FieldLabel"  TargetType="Label">
+                <Setter Property="Foreground" Value="{StaticResource GrayBrush5}"/>
+                <Setter Property="FontSize" Value="10"/>
+            </Style>
+            <Style x:Key="FieldValue"  TargetType="TextBlock">
+                <Setter Property="FontSize" Value="12"/>
+            </Style>
+            
+            <!-- ViewModel to views-->
+            <DataTemplate DataType="{x:Type vm:MessageBoxViewModel}">
+                <v:MessageBoxView/>
+            </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type  vm:InboundTabViewModel}">
+                <v:InboundTab/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type  vm:OutboundTabViewModel}">
+                <v:OutboundTab/>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

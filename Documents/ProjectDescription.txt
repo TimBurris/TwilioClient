@@ -1,0 +1,7 @@
+﻿Looking for an experienced .net Developer to integrate Twilio into a standalone mass sms sender, we would like both the compiled executable as well as the service source code. 
+what we want is the ability to paste a ton of phone numbers into a text box and send a command to each number 
+as well as a page to see the SMS responses.  
+Twilio already has development resources for many languages already we had a Proof of concept of sending the sms through terminal with node js but we .net is required as we will be integrating the service to our .net web product later on.
+the twilio integration will take no time and the Gui we want is simple basically a text box to paste phone numbers and a text box for the Command we wish to send with a Send button. 
+
+
